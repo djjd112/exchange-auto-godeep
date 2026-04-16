@@ -1,0 +1,87 @@
+.container-management-container {
+    padding: 20px;
+    height: calc(100vh - 150px);
+    display: flex;
+    flex-direction: column;
+}
+
+.container-management-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.container-management-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.container-search-container {
+    margin-bottom: 20px;
+}
+
+.container-table-container {
+    margin-bottom: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.container-table-container :deep(.el-table) {
+    flex: 1;
+}
+
+.container-pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.container-info-item {
+    margin-bottom: 15px;
+    display: flex;
+}
+
+.container-info-label {
+    width: 100px;
+    color: #606266;
+}
+
+.container-info-value {
+    flex: 1;
+    color: #303133;
+}
+
+.container-detail {
+    padding: 10px;
+}
+
+.empty-service-tip {
+    text-align: center;
+    padding: 10px 0;
+    color: #909399;
+    font-size: 14px;
+}
+
+.el-select__wrapper{
+    min-width: 100px;
+}
+
+.table-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+/* ========== 容器管理页面下拉框圆角样式统一设置 ========== */
+
+/* 确保所有下拉框都有圆角 */
+.el-select__wrapper {
+    border-radius: var(--lg-radius-md, 12px) !important;
+}

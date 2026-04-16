@@ -1,0 +1,106 @@
+:root {
+  --primary-color: #007aff;
+  --secondary-color: #5ac8fa;
+  --success-color: #34c759;
+  --warning-color: #ff9500;
+  --danger-color: #ff3b30;
+  --info-color: #5856d6;
+  --background-color: #f2f2f7;
+  --text-color: #1c1c1e;
+  --border-color: #d1d1d6;
+  --border-radius: 12px;
+  --input-border-radius: 10px;
+  --button-border-radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 全局圆角输入框样式 */
+.el-input__inner {
+  border-radius: var(--input-border-radius) !important;
+}
+
+/* 全局圆角选择器样式 */
+.el-select .el-input__wrapper,
+.el-select .el-input__inner {
+  border-radius: var(--input-border-radius) !important;
+}
+
+/* 全局圆角下拉面板样式 */
+.el-select-dropdown {
+  border-radius: var(--border-radius) !important;
+}
+
+.el-form--inline .el-form-item {
+  vertical-align: unset !important;
+}
+
+
+/* 全局圆角按钮样式 */
+.el-button {
+  border-radius: var(--button-border-radius) !important;
+}
+
+/* 全局对话框样式 */
+.el-dialog {
+  border-radius: var(--border-radius) !important;
+  overflow: hidden;
+}
+
+.el-dialog__header {
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px 20px !important;
+}
+
+.el-icon{
+  width: auto;
+}
+
+.el-dialog__body {
+  padding: 20px !important;
+}
+
+.el-dialog__footer {
+  border-top: 1px solid var(--border-color);
+  padding: 16px 20px !important;
+}
+
+.apple-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.apple-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--button-border-radius);
+  padding: 10px 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.apple-button:hover {
+  background-color: #0066cc;
+}
+
+.apple-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+} 
