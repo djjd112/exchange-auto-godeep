@@ -1,0 +1,16 @@
+version: '3'
+services:
+  exchange-auto-godeep:
+    image: registry.cn-shenzhen.aliyuncs.com/mgface/exchange-auto-godeep
+    networks:
+      - exchange-auto-godeep
+    restart: always
+    container_name: exchange-auto-godeep
+    privileged: true
+    ports:
+      - "18080:8080"
+    environment:
+      TZ: Asia/Shanghai
+networks:
+  exchange-auto-godeep:
+       driver: bridge

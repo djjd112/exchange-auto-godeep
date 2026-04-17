@@ -1,0 +1,76 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: exchange-auto-godeep
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+env:
+  REGISTRY: registry.cn-shenzhen.aliyuncs.com/mgface
+  IMAGE_NAME: exchange-auto-godeep
+  NOTIFY_URL: https://notify.soeasyex.com/auto_deploy/api/notify  # 回调地址，建议存为GitHub Secret
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.20'
+        
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Get current date
+      id: date
+      run: echo "CURRENT_DATE=$(TZ='Asia/Shanghai' date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
+    - name: Login to Aliyun Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: registry.cn-shenzhen.aliyuncs.com
+        username: ${{ secrets.ALIYUN_USERNAME }}
+        password: ${{ secrets.ALIYUN_PASSWORD }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.CURRENT_DATE }}
+        labels: |
+          version=${{ github.sha }}
+          build-date=${{ env.CURRENT_DATE }}
+    - name: Send build notification
+      run: |
+          curl -X POST "${{ env.NOTIFY_URL }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "address": "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}",
+            "md5": "${{ github.sha }}",
+            "name": "exchange-auto-godeep",
+            "service_id": 4,
+            "version": "${{ env.CURRENT_DATE }}"
+          }'
+    - name: Build Status
+      if: always()
+      run: |
+        if [ ${{ job.status }} == 'success' ]; then
+          echo "✅ Build succeeded at ${{ env.CURRENT_DATE }}"
+        else
+          echo "❌ Build failed at ${{ env.CURRENT_DATE }}"
+        fi
