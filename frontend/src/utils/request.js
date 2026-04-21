@@ -3,9 +3,8 @@ import {ElMessage} from 'element-plus'
 import router from '@/router'
 
 console.log(process.env.NODE_ENV)
-
 const service = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: process.env.VUE_APP_HTTP_BASE_URL || '/api',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json'
@@ -52,17 +51,13 @@ service.interceptors.response.use(
         }
     },
     error => {
-         console.error('响应错误onRejected:', error.response)
-        const res = error.response.data
-        if (res.code === 401) {
+         console.error('响应错误onRejected:', error?.response)
+        const res = error?.response?.data
+        if (res?.code === 401) {
             router.push('/login')
         }
-        // ElMessage({
-        //   message: error.message || '请求失败',
-        //   type: 'error',
-        //   duration: 5 * 1000
-        // })
-        return Promise.reject(res.message)
+        const message = res?.message || error?.message || '请求失败'
+        return Promise.reject(new Error(message))
     }
 )
 

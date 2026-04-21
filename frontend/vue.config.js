@@ -7,17 +7,17 @@ module.exports = defineConfig({
     port: 4000,
     proxy: {
       '/api': {
-        target: process.env.VUE_APP_HTTP_BASE_URL,
+        target: 'http://localhost:8080',
         changeOrigin: true
       },
       '/ws_backend': {
-        target: process.env.VUE_APP_WS_BASE_URL,
+        target: 'ws://localhost:8080',
         changeOrigin: true,
         ws: true
       },
       '/ws':{
         ws: false,
-        target: process.env.VUE_APP_WS_BASE_URL,
+        target: 'http://localhost:8080',
       }
     }
   },
